@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { FormControl, formControlClasses, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { ContatoService } from '@/api/ContatoService';
 
 const style = {
@@ -28,6 +28,16 @@ const ContactForm = ({estaAberto, fechaModal, ContatoAdicionado, contatoEdit, on
   const [linguagem, setLinguagem] = React.useState('');
   const [avatar, setAvatar] = React.useState('');
   const [dataNascimento, setDataNascimento] = React.useState('');
+
+  const resetForm = () => {
+    setNome('');
+    setSobrenome('');
+    setEmail('');
+    setGenero('');
+    setLinguagem('');
+    setAvatar('');
+    setDataNascimento('');
+  };
 
   React.useEffect(() => {
     if (contatoEdit) {
@@ -72,6 +82,7 @@ const ContactForm = ({estaAberto, fechaModal, ContatoAdicionado, contatoEdit, on
         response = await ContatoService.createContato(contato);
         ContatoAdicionado(response.data);
       }
+      resetForm();
       fechaModal();
       alert(contatoEdit ? "Contato editado." : "Contato cadastrado.");
     } catch (error) {
